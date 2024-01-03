@@ -6,6 +6,8 @@ data class Item(
     val cod: String,
     val brand: String,
     val microCategory: String,
+    val fullPrice: Double,
+    val discountedPrice: Double,
     val formattedFullPrice: String,
     val formattedDiscountedPrice: String,
     val urlImage: String,
@@ -14,6 +16,11 @@ data class Item(
     val sizes: List<Details.Size>?
 ) : Serializable {
 
+    fun getPrice() : String {
+        return if(fullPrice == discountedPrice)
+            formattedFullPrice
+        else formattedDiscountedPrice
+    }
     sealed class Details() : Serializable {
 
         class ItemDescription(

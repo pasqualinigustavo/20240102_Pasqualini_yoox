@@ -12,6 +12,12 @@ data class RemoteItem(
     @SerializedName("MicroCategory")
     val microCategory: String,
 
+    @SerializedName("FullPrice")
+    val fullPrice: Double,
+
+    @SerializedName("DiscountedPrice")
+    val discountedPrice: Double,
+
     @SerializedName("FormattedFullPrice")
     val formattedFullPrice: String,
 

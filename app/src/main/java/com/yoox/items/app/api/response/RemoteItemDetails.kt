@@ -12,8 +12,11 @@ data class RemoteItemDetails(
     @SerializedName("Category")
     val category: Category,
 
-    @SerializedName("FormattedPrice")
+    @SerializedName("Price")
     val price: Price,
+
+    @SerializedName("FormattedPrice")
+    val formattedPrice: FormattedPrice,
 
     @SerializedName("ItemDescriptions")
     val itemDescription: ItemDescription?,
@@ -26,6 +29,15 @@ data class RemoteItemDetails(
 ) {
 
     data class Price(
+        @SerializedName("FullPrice")
+        val fullPrice: Double?,
+        @SerializedName("DiscountedPrice")
+        val discountedPrice: Double?,
+    ) {
+
+    }
+
+    data class FormattedPrice(
         @SerializedName("FullPrice")
         val fullPrice: String?,
         @SerializedName("DiscountedPrice")

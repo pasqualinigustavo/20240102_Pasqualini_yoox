@@ -112,10 +112,9 @@ fun ItemContainer(
                         text = item.brand,
                     )
                     Spacer(Modifier.height(dimensionResource(R.dimen.spacing_2)))
-                    //TODO: Apply price logic... do not forget!
                     DetailsText(
                         textAlign = TextAlign.Start,
-                        text = item.formattedFullPrice,
+                        text = item.getPrice(),
                     )
                 }
             }

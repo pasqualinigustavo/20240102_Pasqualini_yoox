@@ -1,11 +1,17 @@
 package com.yoox.items.app.api.response
 
 import com.yoox.items.domain.model.Item
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.NumberFormat
+import java.util.Locale
 
 fun RemoteItem.mapToDomain() = Item(
     cod = cod,
     brand = brand,
     microCategory = microCategory,
+    fullPrice = fullPrice,
+    discountedPrice = discountedPrice,
     formattedFullPrice = formattedFullPrice,
     formattedDiscountedPrice = formattedDiscountedPrice,
     urlImage = "https://www.yoox.com/images/items/" + cod.substring(0, 2) + "/" + cod + "_13_d.jpg",

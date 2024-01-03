@@ -7,6 +7,7 @@ fun RemoteItemDetails.mapToDomain() = ItemDetails(
     brand = brand.mapToDomain(),
     category = category.mapToDomain(),
     price = price.mapToDomain(),
+    formattedPrice = formattedPrice.mapToDomain(),
     urlImage = "https://www.yoox.com/images/items/" + cod.substring(0, 2) + "/" + cod + "_13_d.jpg",
     itemDescription = itemDescription?.mapToDomain(),
     colors = mapColors(),
@@ -15,6 +16,12 @@ fun RemoteItemDetails.mapToDomain() = ItemDetails(
 
 private fun RemoteItemDetails.Price.mapToDomain() =
     ItemDetails.Details.Price(
+        fullPrice = fullPrice,
+        discountedPrice = discountedPrice,
+    )
+
+private fun RemoteItemDetails.FormattedPrice.mapToDomain() =
+    ItemDetails.Details.FormattedPrice(
         fullPrice = fullPrice,
         discountedPrice = discountedPrice,
     )

@@ -7,15 +7,29 @@ data class ItemDetails(
     val brand: Details.Brand,
     val category: Details.Category,
     val price: Details.Price,
+    val formattedPrice: Details.FormattedPrice,
     val urlImage: String,
     val itemDescription: Details.ItemDescription?,
     val colors: List<Details.Color>?,
     val sizes: List<Details.Size>?
 ) : Serializable {
 
+    fun getPrice() : String? {
+        return if(price.fullPrice == price.discountedPrice)
+            formattedPrice.fullPrice
+        else formattedPrice.discountedPrice
+    }
+
     sealed class Details() : Serializable {
 
         class Price(
+            val fullPrice: Double?,
+            val discountedPrice: Double?,
+        ) {
+
+        }
+
+        class FormattedPrice(
             val fullPrice: String?,
             val discountedPrice: String?,
         ) {

@@ -110,10 +110,9 @@ fun ItemDetailsContainer(
                     text = item.brand.name ?: "",
                 )
                 Spacer(Modifier.height(dimensionResource(R.dimen.spacing_2)))
-                //TODO: Apply price logic... do not forget!
                 DetailsText(
                     textAlign = TextAlign.Start,
-                    text = item.price.fullPrice ?: "",
+                    text = item.getPrice() ?: "",
                 )
                 val colors = item.colors?.joinToString {
                     it.name ?: ""
