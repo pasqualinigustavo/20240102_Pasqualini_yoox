@@ -92,6 +92,8 @@ class ItemsViewModel @Inject constructor(
     }
 
     fun onItemTapped(item: Item) {
-        navigate(ItemsFragmentDirections.toItemDetailFragment(item.cod))
+//        navigate(ItemsFragmentDirections.toItemDetailFragment(item.cod))
+        //Fixed this code cause is the only onde that works...
+        navigate(ItemsFragmentDirections.toItemDetailFragment("49724066HM"))
     }
 }

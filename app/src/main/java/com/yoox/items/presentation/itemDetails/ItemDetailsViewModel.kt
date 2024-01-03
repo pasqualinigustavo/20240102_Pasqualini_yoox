@@ -57,7 +57,6 @@ class ItemDetailsViewModel @Inject constructor(
                 result?.let {
                     itemsState = result
                     updateLoadingState(LoadingState.READY)
-                    updateLoadingState(LoadingState.READY)
                 }
             }
         }

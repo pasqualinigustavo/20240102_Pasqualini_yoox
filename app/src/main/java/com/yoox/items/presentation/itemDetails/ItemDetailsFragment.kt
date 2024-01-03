@@ -33,6 +33,7 @@ class ItemDetailsFragment : BaseFragment<ItemDetailsViewModel>() {
 
                 YooxTheme {
                     ItemDetailsFragmentScreen(
+                        loadingState = viewModel.isLoadingState,
                         isLoadingState = viewModel.isLoadingState == LoadingState.LOADING,
                         item = viewModel.itemsState,
                     )
