@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Pasqualini - Yoox</string>
+    <string name="fragment_items">Items</string>
+    <string name="base_api_url">https://ynap.github.io/data/yoox/mock/</string>
+    <string name="no_items">No items</string>
+    <string name="product_info">Product Info</string>
+    <string name="product_colors">Colors</string>
+    <string name="product_sizes">Sizes</string>
+</resources>
