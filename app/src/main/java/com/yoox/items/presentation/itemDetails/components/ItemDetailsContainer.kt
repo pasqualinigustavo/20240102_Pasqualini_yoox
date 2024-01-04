@@ -80,9 +80,12 @@ fun ItemDetailsContainer(
                 GlideImage(
                     model = Uri.parse(item.urlImage),
                     contentDescription = "",
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .width(dimensionResource(id = R.dimen.spacing_190))
+                        .height(dimensionResource(id = R.dimen.spacing_190))
+                        .clip(shape = CircleShape),
                 ) {
-                    it.error(R.drawable.ic_launcher_foreground)
+                    it.error(R.mipmap.ic_launcher)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .fitCenter()
                         .load(Uri.parse(item.urlImage))
