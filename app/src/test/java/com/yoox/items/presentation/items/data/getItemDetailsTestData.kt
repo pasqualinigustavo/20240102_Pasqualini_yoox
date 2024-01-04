@@ -13,8 +13,6 @@ private val item = RemoteItem(
     formattedFullPrice = "$ 1.0",
     formattedDiscountedPrice = "$ 1.0",
     itemDescription = null,
-    colors = null,
-    sizes = null,
 )
 
 private val remotePagination = RemotePagination(

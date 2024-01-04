@@ -26,31 +26,7 @@ data class RemoteItem(
 
     @SerializedName("ItemDescriptions")
     val itemDescription: ItemDescription?,
-
-    @SerializedName("Colors")
-    val colors: List<Color>?,
-
-    @SerializedName("Sizes")
-    val sizes: List<Size>?,
 ) {
-
-    data class Color(
-        @SerializedName("Name")
-        val name: String?,
-        @SerializedName("Description")
-        val description: String?,
-    ) {
-
-    }
-
-    data class Size(
-        @SerializedName("Name")
-        val name: String?,
-        @SerializedName("Text")
-        val text: String?,
-    ) {
-
-    }
 
     data class ItemDescription(
         @SerializedName("ProductInfo")

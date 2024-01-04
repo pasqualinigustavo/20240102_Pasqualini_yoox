@@ -12,8 +12,6 @@ data class Item(
     val formattedDiscountedPrice: String,
     val urlImage: String,
     val itemDescription: Details.ItemDescription?,
-    val colors: List<Details.Color>?,
-    val sizes: List<Details.Size>?
 ) : Serializable {
 
     fun getPrice() : String {
@@ -28,15 +26,6 @@ data class Item(
         ) {
 
         }
-        class Color(
-            val name: String?,
-            val description: String?,
-        ) : Details()
-
-        class Size(
-            val name: String?,
-            val text: String?,
-        ) : Details()
     }
 
 }

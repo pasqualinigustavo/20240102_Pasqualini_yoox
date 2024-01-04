@@ -21,11 +21,11 @@ data class RemoteItemDetails(
     @SerializedName("ItemDescriptions")
     val itemDescription: ItemDescription?,
 
-//    @SerializedName("Colors")
-//    val colors: List<Color>?,
-//
-//    @SerializedName("Sizes")
-//    val sizes: List<Size>?,
+    @SerializedName("Colors")
+    val colors: List<Color>?,
+
+    @SerializedName("Sizes")
+    val sizes: List<Size>?,
 ) {
 
     data class Price(
