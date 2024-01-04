@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
-class GetItemUseCase @Inject constructor(
+open class GetItemUseCase @Inject constructor(
     private val repository: ItemsRepository
 ) {
 

@@ -9,10 +9,10 @@ plugins {
 
 fun gitVersion(): String {
     val os = org.apache.commons.io.output.ByteArrayOutputStream()
-//    project.exec {
-//        commandLine = "git rev-list HEAD --first-parent --count".split(" ")
-//        standardOutput = os
-//    }
+    project.exec {
+        commandLine = "git rev-list HEAD --first-parent --count".split(" ")
+        standardOutput = os
+    }
     return String(os.toByteArray()).trim()
 }
 
@@ -21,7 +21,7 @@ val versionMinor by extra { 0 }
 val versionRelease by extra { 0 }
 
 val versionPatch by extra { gitVersion() }
-val versionCod by extra {("${(((versionMajor * 10000) + (versionMinor * 100) + (versionRelease * 10)) / 10)}" + versionPatch) }
+val versionCod by extra { ("${(((versionMajor * 10000) + (versionMinor * 100) + (versionRelease * 10)) / 10)}" + versionPatch) }
 
 android {
     namespace = "com.yoox.items"
@@ -64,7 +64,7 @@ android {
         debug {
             isMinifyEnabled = false
             isDebuggable = true
-       }
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -92,9 +92,6 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 
     //Compose
     val composeBom = platform(libs.compose.bom)
@@ -116,6 +113,20 @@ dependencies {
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.playServices)
+
+    //Unit Tests
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidTest.rules)
+    androidTestImplementation(libs.androidTest.runner)
+    implementation(libs.nhaarman.mockito)
+    implementation(libs.archcore.runtime)
+    implementation(libs.archcore.testing)
+    implementation(libs.coroutines.tests)
+    implementation(libs.mockk.tests)
+    implementation(libs.truth.exttruth)
+    implementation(libs.truth.google)
 
     //Gson
     implementation(libs.gson)
