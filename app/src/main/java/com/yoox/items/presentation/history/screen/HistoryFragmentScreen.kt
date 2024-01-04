@@ -1,4 +1,4 @@
-package com.yoox.items.presentation.items.screen
+package com.yoox.items.presentation.history.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,48 +11,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.yoox.items.R
-import com.yoox.items.domain.model.Item
-import com.yoox.items.presentation.items.components.ItemContainer
+import com.yoox.items.domain.model.History
+import com.yoox.items.presentation.history.components.HistoryItemContainer
 import com.yoox.items.presentation.items.components.LoadingContainer
-import com.yoox.items.utilities.extensions.isScrolledToTheEnd
 
 @Composable
-fun ItemsFragmentScreen(
+fun HistoryFragmentScreen(
     isLoadingState: Boolean,
-    itemList: MutableList<Item>?,
-    isRefreshingItemListState: Boolean,
-    onRefreshItemList: () -> Unit,
-    onItemTapped: (item: Item) -> Unit,
-    onBottomListReached: () -> Unit,
-    onHistoryClick: () -> Unit,
+    itemList: MutableList<History>?,
 ) {
     Scaffold(
         modifier = Modifier
@@ -60,27 +41,13 @@ fun ItemsFragmentScreen(
             .background(color = Color.White),
         snackbarHost = { /* NO-OP */ },
         containerColor = MaterialTheme.colorScheme.background,
-        floatingActionButton = {
-            CustomFabHomeButton(
-                onHistoryClick = {
-                    onHistoryClick()
-                },
-            )
-        },
-        floatingActionButtonPosition = FabPosition.End,
         content = { innerPadding ->
             LoadingContainer(
                 isLoading = isLoadingState,
                 modifier = Modifier.padding(innerPadding),
             ) {
                 BuildContent(
-                    isRefreshingItemListState = isRefreshingItemListState,
-                    onRefreshItemList = { onRefreshItemList() },
                     itemList = itemList,
-                    onBottomListReached = { onBottomListReached() },
-                    onItemTapped = { item ->
-                        onItemTapped(item)
-                    },
                 )
             }
         }
@@ -89,11 +56,7 @@ fun ItemsFragmentScreen(
 
 @Composable
 private fun BuildContent(
-    isRefreshingItemListState: Boolean,
-    onRefreshItemList: () -> Unit,
-    itemList: MutableList<Item>?,
-    onBottomListReached: () -> Unit,
-    onItemTapped: (item: Item) -> Unit,
+    itemList: MutableList<History>?,
 ) {
     Column(
         modifier = Modifier
@@ -105,35 +68,19 @@ private fun BuildContent(
     ) {
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_10)))
         BuildTabContent(
-            isRefreshingItemListState = isRefreshingItemListState,
-            onRefreshItemList = { onRefreshItemList() },
             itemList = itemList,
-            onBottomListReached = { onBottomListReached() },
-            onItemTapped = { item ->
-                onItemTapped(item)
-            },
         )
     }
 }
 
 @Composable
 private fun BuildTabContent(
-    isRefreshingItemListState: Boolean,
-    onRefreshItemList: () -> Unit,
-    itemList: MutableList<Item>?,
-    onBottomListReached: () -> Unit,
-    onItemTapped: (item: Item) -> Unit,
+    itemList: MutableList<History>?,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
 
         BuildItemsContent(
-            isRefreshingItemListState = isRefreshingItemListState,
-            onRefreshItemList = { onRefreshItemList() },
             itemList = itemList,
-            onBottomListReached = { onBottomListReached() },
-            onItemTapped = { item ->
-                onItemTapped(item)
-            }
         )
     }
 }
@@ -141,21 +88,13 @@ private fun BuildTabContent(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun BuildItemsContent(
-    isRefreshingItemListState: Boolean,
-    onRefreshItemList: () -> Unit,
-    itemList: MutableList<Item>?,
-    onBottomListReached: () -> Unit,
-    onItemTapped: (item: Item) -> Unit,
+    itemList: MutableList<History>?,
 ) {
     val scrollState = rememberLazyListState()
-
-    val pullRefreshState =
-        rememberPullRefreshState(isRefreshingItemListState, { onRefreshItemList() })
 
     Box(
         Modifier
             .fillMaxSize()
-            .pullRefresh(pullRefreshState)
     ) {
 
         if (itemList?.isEmpty() == true) {
@@ -170,7 +109,7 @@ private fun BuildItemsContent(
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Black,
                     fontSize = 16.sp,
-                    text = stringResource(id = R.string.no_items),
+                    text = stringResource(id = R.string.no_history),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -189,54 +128,13 @@ private fun BuildItemsContent(
                                 .fillMaxWidth()
                                 .height(dimensionResource(id = R.dimen.spacing_5))
                         )
-                        ItemContainer(
+                        HistoryItemContainer(
                             item = list[index],
-                            onItemTapped = { item ->
-                                onItemTapped(item)
-                            },
                         )
                         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacing_5)))
                     }
                 }
             }
         }
-
-        PullRefreshIndicator(
-            refreshing = isRefreshingItemListState,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
     }
-
-    // observer when reached end of list
-    val endOfListReached by remember {
-        derivedStateOf {
-            scrollState.isScrolledToTheEnd()
-        }
-    }
-
-    // act when end of list reached
-    LaunchedEffect(endOfListReached) {
-        onBottomListReached()
-    }
-}
-
-@Composable
-fun CustomFabHomeButton(
-    onHistoryClick: () -> Unit,
-) {
-    FloatingActionButton(
-        containerColor = Color.Black,
-        shape = CircleShape,
-        onClick = {
-            onHistoryClick()
-        },
-        content = {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_history),
-                contentDescription = "",
-                tint = Color.White
-            )
-        }
-    )
 }

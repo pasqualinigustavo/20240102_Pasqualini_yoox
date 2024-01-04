@@ -82,12 +82,6 @@ class AppModule {
         return PreferenceManager.getDefaultSharedPreferences(app)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideSharedPreferenceProvider(sharedPreferences: SharedPreferences): SharedPreferenceProvider {
-//        return UtilitaSharedPreferences(sharedPreferences)
-//    }
-
     //region handlers
     @Singleton
     @Provides

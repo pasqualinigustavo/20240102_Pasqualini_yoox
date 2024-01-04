@@ -1,4 +1,4 @@
-package com.yoox.items.presentation.items
+package com.yoox.items.presentation.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,15 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import com.yoox.items.BaseFragment
 import com.yoox.items.domain.model.LoadingState
-import com.yoox.items.presentation.items.screen.ItemsFragmentScreen
+import com.yoox.items.presentation.history.screen.HistoryFragmentScreen
 import com.yoox.items.utilities.YooxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ItemsFragment :
-    BaseFragment<ItemsViewModel>() {
+class HistoryFragment :
+    BaseFragment<HistoryViewModel>() {
 
-    override val viewModel: ItemsViewModel by viewModels()
+    override val viewModel: HistoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,22 +29,9 @@ class ItemsFragment :
             setContent {
 
                 YooxTheme {
-                    ItemsFragmentScreen(
+                    HistoryFragmentScreen(
                         isLoadingState = viewModel.isLoadingState == LoadingState.LOADING,
-                        isRefreshingItemListState = viewModel.isRefreshingState ?: false,
                         itemList = viewModel.itemsState,
-                        onRefreshItemList = {
-                            viewModel.loadNextPage()
-                        },
-                        onBottomListReached = {
-                            viewModel.onBottomReached()
-                        },
-                        onItemTapped = { item ->
-                            viewModel.onItemTapped(item)
-                        },
-                        onHistoryClick = {
-                            viewModel.onHistoryClick()
-                        },
                     )
                 }
             }

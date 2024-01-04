@@ -3,7 +3,6 @@ package com.yoox.items.presentation.items
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.yoox.items.BaseViewModel
 import com.yoox.items.domain.interactors.GetItemsUseCase
@@ -95,5 +94,9 @@ class ItemsViewModel @Inject constructor(
 //        navigate(ItemsFragmentDirections.toItemDetailFragment(item.cod))
         //Fixed this code cause is the only onde that works...
         navigate(ItemsFragmentDirections.toItemDetailFragment("49724066HM"))
+    }
+
+    fun onHistoryClick() {
+        navigate(ItemsFragmentDirections.toHistoryFragment())
     }
 }

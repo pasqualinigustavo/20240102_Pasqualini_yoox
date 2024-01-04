@@ -6,8 +6,7 @@ import kotlinx.coroutines.Dispatchers
 object Const {
 
     val requestDispatchers: CoroutineDispatcher = Dispatchers.IO
-    val mainRequestDispatchers: CoroutineDispatcher = Dispatchers.Main
     const val EMPTY_RESPONSE_ERROR = "Response body is empty or null"
-
-    const val ITEM_BUNDLE = "ITEM"
+    const val EMPTY = ""
+    const val HISTORY_ITEMS = "HISTORY_ITEMS"
 }

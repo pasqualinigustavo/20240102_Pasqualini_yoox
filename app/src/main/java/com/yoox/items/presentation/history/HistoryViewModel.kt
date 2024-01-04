@@ -1,15 +1,13 @@
-package com.yoox.items.presentation.itemDetails
+package com.yoox.items.presentation.history
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.yoox.items.BaseViewModel
-import com.yoox.items.domain.interactors.AddHistoryUseCase
-import com.yoox.items.domain.interactors.GetItemUseCase
-import com.yoox.items.domain.model.Item
-import com.yoox.items.domain.model.ItemDetails
+import com.yoox.items.domain.interactors.GetHistoryUseCase
+import com.yoox.items.domain.interactors.GetItemsUseCase
+import com.yoox.items.domain.model.History
 import com.yoox.items.domain.model.LoadingState
 import com.yoox.items.utilities.Const
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,18 +18,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemDetailsViewModel @Inject constructor(
-    val getItemUseCase: GetItemUseCase,
-    savedStateHandle: SavedStateHandle,
-    val addHistoryUseCase: AddHistoryUseCase,
+class HistoryViewModel @Inject constructor(
+    val getHistoryUseCase: GetHistoryUseCase,
 ) : BaseViewModel() {
-
-    val cod: String = checkNotNull(savedStateHandle["cod"])
 
     private val lock = Any()
     private var loadJob: Job? = null
+    var isRefreshingState by mutableStateOf<Boolean?>(null)
+        private set
 
-    var itemsState by mutableStateOf<ItemDetails?>(null)
+    var itemsState by mutableStateOf(mutableListOf<History>())
         private set
 
     var isLoadingState by mutableStateOf(LoadingState.NONE)
@@ -40,7 +36,7 @@ class ItemDetailsViewModel @Inject constructor(
     override fun onAttached() {
         super.onAttached()
         viewModelScope.launch {
-            loadItem()
+            loadHistory()
         }
     }
 
@@ -50,30 +46,24 @@ class ItemDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun loadItem() {
+    private fun loadHistory() {
         updateLoadingState(LoadingState.LOADING)
         loadJob?.cancel()
         loadJob = viewModelScope.launch(Const.requestDispatchers) {
-            getItemUseCase.invoke(cod).catch {
+            getHistoryUseCase.invoke().catch {
                 updateLoadingState(LoadingState.ERROR)
+                updateIsRefreshingState(false)
             }.collectLatest { result ->
                 result?.let {
-                    itemsState = result
+                    itemsState.addAll(result)
+                    updateIsRefreshingState(false)
                     updateLoadingState(LoadingState.READY)
-                    //insert item on history
-                    addItemHistory(it)
                 }
             }
         }
     }
 
-    private fun addItemHistory(item: ItemDetails) {
-        viewModelScope.launch(Const.requestDispatchers) {
-            addHistoryUseCase.invoke(item).catch {
-                updateLoadingState(LoadingState.ERROR)
-            }.collectLatest { result ->
-                //NOP
-            }
-        }
+    fun updateIsRefreshingState(isRefreshing: Boolean) {
+        isRefreshingState = isRefreshing
     }
 }

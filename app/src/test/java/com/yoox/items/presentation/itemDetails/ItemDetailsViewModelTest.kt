@@ -8,6 +8,7 @@ import com.yoox.items.MainCoroutineRule
 import com.yoox.items.app.api.ApiResponseHandler
 import com.yoox.items.app.api.response.RemoteItemDetails
 import com.yoox.items.app.repository.ItemsRepository
+import com.yoox.items.domain.interactors.AddHistoryUseCase
 import com.yoox.items.domain.interactors.GetItemUseCase
 import com.yoox.items.presentation.itemDetails.data.itemDetailsSampleData
 import io.mockk.coEvery
@@ -33,6 +34,7 @@ class ItemDetailsViewModelTest {
     private lateinit var itemsRepository: ItemsRepository
     private val apiResponseHandler: ApiResponseHandler<*> = mockk(relaxed = true)
     private val getItemUseCase: GetItemUseCase = mock()
+    private val addHistoryUseCase: AddHistoryUseCase = mock()
     private val savedStateHandle: SavedStateHandle = mock()
 
     @Before
@@ -44,7 +46,8 @@ class ItemDetailsViewModelTest {
     private fun getItemsViewModel(): ItemDetailsViewModel {
         return ItemDetailsViewModel(
             getItemUseCase = getItemUseCase,
-            savedStateHandle = savedStateHandle
+            savedStateHandle = savedStateHandle,
+            addHistoryUseCase = addHistoryUseCase
         )
     }
 

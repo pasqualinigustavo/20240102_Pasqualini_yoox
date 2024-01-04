@@ -3,6 +3,7 @@
     <string name="fragment_items">Items</string>
     <string name="base_api_url">https://ynap.github.io/data/yoox/mock/</string>
     <string name="no_items">No items</string>
+    <string name="no_history">No history</string>
     <string name="no_item">No item information</string>
     <string name="product_info">Product Info</string>
     <string name="product_colors">Colors</string>
